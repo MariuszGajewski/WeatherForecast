@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<form method="post" action="getWeatherController">
+    <input type="text" placeholder="Podaj nazwe miasta" th:name="cityName"><br/>
+    <label for="actual">Aktualna prognoza</label>
+    <input type="radio" name="weather" th:name="weatherType" th:value="actual" id="actual" checked="true">
+    <label for="forecast">Prognoza pogody na 5 dni</label>
+    <input type="radio" name="weather" th:name="weatherType" th:value="forecast" id="forecast">
+    <input type="submit">
+</form>
+<table th:if="${weathers != null}" th:each="weather : ${weathers}" >
+    <tr>
+        <th id="cityName" colspan="2" th:text="${weather.cityName}"></th>
+    </tr>
+    <tr>
+        <td id="date"  th:text="${weather.date}"></td>
+        <td id="description"  th:text="${weather.weatherComment}"></td>
+    </tr>
+    <tr>
+        <td>Temperatura </td>
+        <td th:text="${weather.temperature}" th:class="${weather.temperature<10} ? cold"></td>
+    </tr>
+    <tr>
+        <td>Ciśnienie</td>
+        <td th:text="${weather.pressure}" th:class="${weather.pressure >998} ? optimalPressure : lowPressure"></td>
+    </tr>
+    <tr>
+        <td>Wilgotność [%]</td>
+        <td th:text="${weather.humidity}"></td>
+    </tr>
+    <tr>
+        <td>Zachmurzenie [%]</td>
+        <td th:text="${weather.clouds}"></td>
+    </tr>
+</table>
+
+</body>
+</html>
